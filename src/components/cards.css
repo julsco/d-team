@@ -1,0 +1,47 @@
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    flex-direction: column;
+    cursor: pointer;    
+    
+}
+
+.card__team {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+    
+}
+
+.card__team img{
+    height: 90px;
+    width: auto;
+}
+
+.attributeStyle{
+    list-style: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.player__name{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.card__body{
+    display: flex;
+    flex-direction: column;
+    
+}
