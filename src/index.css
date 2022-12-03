@@ -86,7 +86,7 @@ body.active-modal {
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 35px;
   margin: 30px;
 }
 
