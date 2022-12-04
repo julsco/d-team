@@ -133,6 +133,7 @@ useEffect( () => {
     setShowButton(true)
     setShowBackToTeamsBtn(!showBackToTeamsBtn)
     setAPISearchPlayer("")
+    setShowNotFound(false)
   }
 
 
@@ -142,7 +143,9 @@ useEffect( () => {
     setShowTeamPlayers(!showTeamPlayers)
     setShowTeams(!showTeams)
     const filteredPlayers = props.players.filter( (player:IPlayer) => player.team === team)
-    !props.goalKeeper ? setMyPlayers(filteredPlayers.filter((player: IPlayer) => player.position !== "Goalkeeper")) : setMyPlayers(filteredPlayers.filter((player: IPlayer) => player.position === "Goalkeeper")) 
+    
+    !props.goalKeeper ? setMyPlayers(filteredPlayers.filter((player: IPlayer) => player.position !== "Goalkeeper")) : 
+    setMyPlayers(filteredPlayers.filter((player: IPlayer) => player.position === "Goalkeeper")) 
   }
 
   //Button to go back to team interface from Players searched by team
@@ -151,6 +154,7 @@ useEffect( () => {
     setShowTeamPlayers(!showTeamPlayers)
     setShowTeams(!showTeams)
     setMyPlayers([])
+    
   }
 
   //Selection of player setup
@@ -179,6 +183,7 @@ useEffect( () => {
     setQueryClick("")
     setShowBackToTeamsBtn(false)
     setAPISearchPlayer("")
+    setShowNotFound(false)
   }
   
 
@@ -222,7 +227,7 @@ useEffect( () => {
                                   <Cards key= {i} player={player} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
                                    )): !showTeams && !showTeamPlayers && !showNotFound &&  <Spinner />}
 
-                              {!showTeams && showNotFound &&  playersSearched.length ===0 && <>Player {queryClick} not found</>}
+                              {!showTeams && showNotFound &&  playersSearched.length ===0 && <>{!props.goalKeeper ? "Player" : "Goalkeeper"} {queryClick} not found</>}
                                 
                               
                                   
@@ -230,10 +235,10 @@ useEffect( () => {
                             {/* Players from team selected interface */}
                             </div>
                             <div className="btn__left inner__modal">
-                              {showTeamPlayers && !showTeams && <Button className="btn btn-primary btn-lg" onClick={backToTeams}><TfiAngleLeft /></Button>}
+                              {!showNotFound && showTeamPlayers && !showTeams && <Button className="btn btn-primary btn-lg" onClick={backToTeams}><TfiAngleLeft /></Button>}
                             </div>
                             <div className="inner__modal">
-                              {showTeamPlayers && !showTeams && myPlayers.map((player: IPlayer, i:number)=>(
+                              {!showNotFound && showTeamPlayers && !showTeams && myPlayers.map((player: IPlayer, i:number)=>(
                               <Cards key= {i} player={player} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
                               ))}
                             </div> 
