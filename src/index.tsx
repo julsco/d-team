@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './components/App';
 import Nav from './components/Nav';
 import reportWebVitals from './reportWebVitals';
+import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,6 +14,7 @@ root.render(
   <React.StrictMode>
     <Nav />
     <App />
+    <Footer />
   </React.StrictMode>
 );
 

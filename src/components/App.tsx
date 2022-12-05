@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
-import { API } from '../helpers/API';
+import PlayerColumn from './PlayerColumn';
 import { IPlayer, ITeam } from '../helpers/interfaces';
 import BtnAdd from './BtnAdd';
 
+
+const getData = (apiUrl:string, setterFunction: (data: []) => void) => {
+  fetch(apiUrl)
+     .then((response) => response.json())
+     .then((data) => {
+        setterFunction(data);
+     })
+     .catch((err) => {
+        console.log(err.message);
+     });
+ }
 
 export default function App() {
 
@@ -13,29 +24,11 @@ export default function App() {
   const [allPlayers, setAllPlayers] = useState<IPlayer[]>([])
   const [allTeams, setAllTeams] = useState<ITeam[]>([])
 
-
-  useEffect(() => {
-    fetch(API_PLAYERS)
-       .then((response) => response.json())
-       .then((data) => {
-          setAllPlayers(data);
-       })
-       .catch((err) => {
-          console.log(err.message);
-       });
+   useEffect(() => {
+    getData(API_PLAYERS, setAllPlayers)
+    getData(API_TEAMS, setAllTeams)
     }, []);
     
-
-    useEffect(() => {
-      fetch(API_TEAMS)
-         .then((response) => response.json())
-         .then((data) => {
-            setAllTeams(data);
-         })
-         .catch((err) => {
-            console.log(err.message);
-         });
-   }, []);
 
 
 /*RENDER*/
@@ -45,29 +38,13 @@ export default function App() {
     <div className="wrapper">
         <div className='player__container'>
 
-            <div className='player__column'>
-              <BtnAdd teams={allTeams} players={allPlayers} goalKeeper={true}/>
-            </div>
-
-            <div className='player__column'>
-              <BtnAdd teams={allTeams} players={allPlayers}/>
-            </div>
-
-            <div className='player__column'>
-                <BtnAdd teams={allTeams} players={allPlayers}/>
-            </div>
-
-            <div className='player__column'>
-                <BtnAdd teams={allTeams} players={allPlayers}/>
-            </div>
-
-            <div className='player__column'>
-                <BtnAdd teams={allTeams} players={allPlayers}/>
-            </div>
-
-            <div className='player__column'>
-                <BtnAdd teams={allTeams} players={allPlayers}/>
-            </div>
+          <PlayerColumn teams= {allTeams} players={allPlayers} goalKeeper={true} />
+          <PlayerColumn teams= {allTeams} players={allPlayers} />
+          <PlayerColumn teams= {allTeams} players={allPlayers} />
+          <PlayerColumn teams= {allTeams} players={allPlayers} />
+          <PlayerColumn teams= {allTeams} players={allPlayers} />
+          <PlayerColumn teams= {allTeams} players={allPlayers} />
+        
         </div>
     </div>
 </>

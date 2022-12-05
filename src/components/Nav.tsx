@@ -60,8 +60,8 @@ function Navigator() {
             <img
               alt="logo"
               src={logo}
-              width="150"
-              height="150"
+              width="131"
+              height="131"
               className="d-inline-block align-top"
             />{' '}
             
