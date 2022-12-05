@@ -80,7 +80,8 @@ export default function BtnAdd(props: IBtn) {
   
 /* Set API depending on query*/
 useEffect(() => {
-    if (searchClick > 0) setAPISearchPlayer(`${API}/search?fullName=${queryClick.trim()}`);
+    /* if (searchClick > 0) setAPISearchPlayer(`${API}/search?fullName=${queryClick.trim()}`); */
+    if (searchClick > 0) setAPISearchPlayer(`https://d-team.netlify.app/.netlify/functions/api/search?fullName=${queryClick.trim()}`);
     }, [queryClick]);
 
 /* API call*/
