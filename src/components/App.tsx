@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
+import { API, CORS_SERVER } from '../helpers/API';
 import PlayerColumn from './PlayerColumn';
 import { IPlayer, ITeam } from '../helpers/interfaces';
-import BtnAdd from './BtnAdd';
+
 
 
 const getData = (apiUrl:string, setterFunction: (data: []) => void) => {
@@ -18,8 +19,8 @@ const getData = (apiUrl:string, setterFunction: (data: []) => void) => {
 
 export default function App() {
 
-  const API_PLAYERS: string = "https://d-team.netlify.app/.netlify/functions/api/players"/* `${API}/players`; */
-  const API_TEAMS: string =  "https://d-team.netlify.app/.netlify/functions/api/teams"/* `${API}/teams`; */
+  const API_PLAYERS: string = `${CORS_SERVER}/${API}/players`
+  const API_TEAMS: string =  `${CORS_SERVER}/${API}/teams`
 
   const [allPlayers, setAllPlayers] = useState<IPlayer[]>([])
   const [allTeams, setAllTeams] = useState<ITeam[]>([])
@@ -34,8 +35,7 @@ export default function App() {
 /*RENDER*/
 
   return (
-    <>
-    <div className="wrapper">
+   
         <div className='player__container'>
 
           <PlayerColumn teams= {allTeams} players={allPlayers} goalKeeper={true} />
@@ -46,8 +46,7 @@ export default function App() {
           <PlayerColumn teams= {allTeams} players={allPlayers} />
         
         </div>
-    </div>
-</>
+ 
   );
 
   

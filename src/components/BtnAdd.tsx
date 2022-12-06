@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getJSON } from "../helpers/apiCall";
-import { API } from '../helpers/API';
+import { API, CORS_SERVER } from '../helpers/API';
 import { IPlayer, ITeam } from "../helpers/interfaces";
 import '../index.css';
 import Button from 'react-bootstrap/Button';
@@ -15,13 +15,6 @@ interface IBtn {
   teams: ITeam[],
   players: IPlayer[]
   goalKeeper?: boolean
-}
-
-const myStyle = {
-    display: "flex",
-    flexFlow: "column wrap",
-    margin: "20px 0 20px",
-    gap: "15px",
 }
 
 
@@ -81,7 +74,7 @@ export default function BtnAdd(props: IBtn) {
 /* Set API depending on query*/
 useEffect(() => {
     /* if (searchClick > 0) setAPISearchPlayer(`${API}/search?fullName=${queryClick.trim()}`); */
-    if (searchClick > 0) setAPISearchPlayer(`https://d-team.netlify.app/.netlify/functions/api/search?fullName=${queryClick.trim()}`);
+    if (searchClick > 0) setAPISearchPlayer(`${CORS_SERVER}/${API}/search?fullName=${queryClick.trim()}`);
     }, [queryClick]);
 
 /* API call*/
@@ -190,7 +183,7 @@ useEffect( () => {
 
   return (
   <>
-    <div style={myStyle}>
+    <div className='btnAdd__component'>
       
             {/* Button to add player and lead to team interface */}
             {showButton && <Button onClick={handleAdd} className="btn btn-primary btn-lg">Add {props.goalKeeper ? "goalkeeper" : "player"}</Button>}

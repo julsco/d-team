@@ -29,7 +29,7 @@ function Navigator() {
     return (
     <>
       
-      <Navbar bg="dark" variant="dark">
+      <Navbar style = {{height: "18vh"}} bg="dark" variant="dark">
         <Container>
           
           <div>

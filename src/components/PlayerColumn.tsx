@@ -15,17 +15,11 @@ export default function PlayerColumn(props: IPlayerColumn) {
 /*RENDER*/
 
   return (
-    <>
-    <div className="wrapper">
-        <div className='player__container'>
-
-            <div className='player__column'>
-              <BtnAdd teams={props.teams} players={props.players} goalKeeper={props.goalKeeper}/>
-            </div>
-
+    
+        <div className='player__column'>
+          <BtnAdd teams={props.teams} players={props.players} goalKeeper={props.goalKeeper}/>
         </div>
-    </div>
-</>
+
   );
 
   

@@ -21,11 +21,19 @@ body {
   text-align: center;
 }
 
+.wrapper{
+  display: flex;
+  flex-flow: row wrap;
+  margin: auto;
+  
+
+}
+
 .player__container{
   display: flex;
   flex-flow: row wrap;
   margin: auto;
-  gap: 20px;
+  gap: 15px;
   min-height: 75vh;
   width: 95%;
 }
@@ -48,6 +56,13 @@ body {
 .btn{
   display: flex;
   margin: auto;
+}
+
+.btnAdd__component{
+  display: flex;
+  flex-flow: column wrap;
+  
+  gap: 15px
 }
 
 
