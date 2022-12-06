@@ -179,14 +179,14 @@ useEffect( () => {
     setAPISearchPlayer("")
     setShowNotFound(false)
   }
-  
+
 
   return (
   <>
     <div className='btnAdd__component'>
       
             {/* Button to add player and lead to team interface */}
-            {showButton && <Button onClick={handleAdd} className="btn btn-primary btn-lg">Add {props.goalKeeper ? "goalkeeper" : "player"}</Button>}
+            {showButton && <Button onClick={handleAdd} className="btn btn-primary btn-lg sp">Add {props.goalKeeper ? "goalkeeper" : "player"}</Button>}
             {modal && 
             <>
                 <div onClick={backToInit} className="overlay"></div>

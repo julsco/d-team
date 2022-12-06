@@ -61,7 +61,6 @@ body {
 .btnAdd__component{
   display: flex;
   flex-flow: column wrap;
-  
   gap: 15px
 }
 

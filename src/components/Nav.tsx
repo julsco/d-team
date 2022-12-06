@@ -56,7 +56,7 @@ function Navigator() {
             
           </div>
 
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="https://julsco.github.io/d-team/">
             <img
               alt="logo"
               src={logo}
