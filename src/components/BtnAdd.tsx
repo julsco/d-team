@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getJSON } from "../helpers/apiCall";
-import { CORS_API } from '../helpers/API';
+import { API } from '../helpers/API';
 import { IPlayer, ITeam } from "../helpers/interfaces";
 import '../index.css';
 import Button from 'react-bootstrap/Button';
@@ -74,7 +74,7 @@ export default function BtnAdd(props: IBtn) {
 /* Set API depending on query*/
 useEffect(() => {
     /* if (searchClick > 0) setAPISearchPlayer(`${API}/search?fullName=${queryClick.trim()}`); */
-    if (searchClick > 0) setAPISearchPlayer(`${CORS_API}/search?fullName=${queryClick.trim()}`);
+    if (searchClick > 0) setAPISearchPlayer(`${API}/search?fullName=${queryClick.trim()}`);
     }, [queryClick]);
 
 /* API call*/
