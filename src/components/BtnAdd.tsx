@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getJSON } from "../helpers/apiCall";
-import { API, CORS_SERVER } from '../helpers/API';
+import { CORS_API } from '../helpers/API';
 import { IPlayer, ITeam } from "../helpers/interfaces";
 import '../index.css';
 import Button from 'react-bootstrap/Button';
@@ -61,7 +61,7 @@ export default function BtnAdd(props: IBtn) {
     if (searchClick > 0) {
       setPlayersSearched([])
     }
-    if (query && (query.trim().length !== 0)){
+    if (query && (query?.trim().length !== 0)){
       setShowBackToTeamsBtn(true)
       setQueryClick(query.trimStart());
       setSearchClick(count => count+=1)
@@ -74,7 +74,7 @@ export default function BtnAdd(props: IBtn) {
 /* Set API depending on query*/
 useEffect(() => {
     /* if (searchClick > 0) setAPISearchPlayer(`${API}/search?fullName=${queryClick.trim()}`); */
-    if (searchClick > 0) setAPISearchPlayer(`${CORS_SERVER}/${API}/search?fullName=${queryClick.trim()}`);
+    if (searchClick > 0) setAPISearchPlayer(`${CORS_API}/search?fullName=${queryClick.trim()}`);
     }, [queryClick]);
 
 /* API call*/
@@ -86,7 +86,7 @@ useEffect( () => {
           !props.goalKeeper ? setPlayersSearched(players?.filter((player: IPlayer) => player.position !== "Goalkeeper")) : 
           setPlayersSearched(players.filter((player: IPlayer) => player.position === "Goalkeeper")));
       
-          playersSearched.length === 0 ? setShowNotFound(true) : setShowNotFound(false);
+          playersSearched?.length === 0 ? setShowNotFound(true) : setShowNotFound(false);
       }
     }, 2000)
   },[APISearchPlayer]);
@@ -217,11 +217,11 @@ useEffect( () => {
 
 
 
-                              {!showTeams && playersSearched.length > 0 ? playersSearched.map((player: IPlayer, i: number) => (
+                              {!showTeams && playersSearched?.length > 0 ? playersSearched.map((player: IPlayer, i: number) => (
                                   <Cards key= {i} player={player} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
                                    )): !showTeams && !showTeamPlayers && !showNotFound &&  <Spinner />}
 
-                              {!showTeams && showNotFound &&  playersSearched.length ===0 && <>{!props.goalKeeper ? "Player" : "Goalkeeper"} {queryClick} not found</>}
+                              {!showTeams && showNotFound &&  playersSearched?.length ===0 && <>{!props.goalKeeper ? "Player" : "Goalkeeper"} {queryClick} not found</>}
                                 
                               
                                   

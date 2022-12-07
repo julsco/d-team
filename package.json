@@ -1,6 +1,7 @@
 {
   "name": "my-app",
   "homepage": "https://julsco.github.io/d-team",
+  "proxy": "https://d-team.netlify.app/.netlify/functions/api",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

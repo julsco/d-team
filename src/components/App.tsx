@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
-import { API, CORS_SERVER } from '../helpers/API';
+import { API, CORS_API} from '../helpers/API';
 import PlayerColumn from './PlayerColumn';
 import { IPlayer, ITeam } from '../helpers/interfaces';
 
@@ -19,8 +19,8 @@ const getData = (apiUrl:string, setterFunction: (data: []) => void) => {
 
 export default function App() {
 
-  const API_PLAYERS: string = `${CORS_SERVER}/${API}/players`
-  const API_TEAMS: string =  `${CORS_SERVER}/${API}/teams`
+  const API_PLAYERS: string = `${API}/players`
+  const API_TEAMS: string =  `${API}/teams`
 
   const [allPlayers, setAllPlayers] = useState<IPlayer[]>([])
   const [allTeams, setAllTeams] = useState<ITeam[]>([])
