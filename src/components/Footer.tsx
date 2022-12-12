@@ -17,7 +17,7 @@ export default function Footer() {
 
       <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' , height: "7vh"  }}>
         © {new Date().getFullYear()} Copyright: &nbsp;&nbsp;
-        <a className='text-white' href='https://github.com/julsco/d-team'>
+        <a className='text-white' href='https://github.com/julsco/d-team' target="blank">
             <GoMarkGithub />
         </a>
       </div>

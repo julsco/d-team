@@ -14,10 +14,15 @@ export const getJSON = async function(url:string){
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-/* const fetchData = async () =>{
-    const data = await getJSON("http://localhost:8080/players");
-    console.log(data);
-}
-
-fetchData(); */
+export const getData = (apiUrl:string, setterFunction: (data: []) => void) => {
+    fetch(apiUrl)
+       .then((response) => response.json())
+       .then((data) => {
+          setterFunction(data);
+       })
+       .catch((err) => {
+          console.log(err.message);
+       });
+   }

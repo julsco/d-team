@@ -45,3 +45,17 @@
     flex-direction: column;
     
 }
+
+/* CARD PLAYER */
+
+.card{
+    width: 15rem;
+    height: 35rem;  
+}
+
+.added{ 
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    cursor: auto;
+}
+

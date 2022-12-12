@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
-import { API, CORS_API} from '../helpers/API';
-import PlayerColumn from './PlayerColumn';
+import { API } from '../helpers/API';
 import { IPlayer, ITeam } from '../helpers/interfaces';
+import { getData } from '../helpers/apiCall';
+import { localGet, localSet } from '../helpers/localStorage';
+import PlayerColumn from './PlayerColumn';
 
-
-
-const getData = (apiUrl:string, setterFunction: (data: []) => void) => {
-  fetch(apiUrl)
-     .then((response) => response.json())
-     .then((data) => {
-        setterFunction(data);
-     })
-     .catch((err) => {
-        console.log(err.message);
-     });
- }
 
 export default function App() {
 
   const API_PLAYERS: string = `${API}/players`
   const API_TEAMS: string =  `${API}/teams`
 
+  useEffect(() => {
+   getData(API_PLAYERS, setAllPlayers)
+   getData(API_TEAMS, setAllTeams)
+   }, []);
+   
   const [allPlayers, setAllPlayers] = useState<IPlayer[]>([])
   const [allTeams, setAllTeams] = useState<ITeam[]>([])
+  const [dreamTeam, setDreamTeam] = useState<IPlayer[]>([])
 
-   useEffect(() => {
-    getData(API_PLAYERS, setAllPlayers)
-    getData(API_TEAMS, setAllTeams)
-    }, []);
+   //Local Storage
+
+
+  useEffect(()=> {
+    localGet("dream-team", () => setDreamTeam)
+  },[])
+
+  useEffect(()=> {
+    localSet("dream-team", dreamTeam)
+  })
+
+
     
-
+  
 
 /*RENDER*/
 
@@ -38,12 +42,12 @@ export default function App() {
    
         <div className='player__container'>
 
-          <PlayerColumn teams= {allTeams} players={allPlayers} goalKeeper={true} />
-          <PlayerColumn teams= {allTeams} players={allPlayers} />
-          <PlayerColumn teams= {allTeams} players={allPlayers} />
-          <PlayerColumn teams= {allTeams} players={allPlayers} />
-          <PlayerColumn teams= {allTeams} players={allPlayers} />
-          <PlayerColumn teams= {allTeams} players={allPlayers} />
+          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} goalKeeper={true} />
+          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
+          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
+          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
+          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
+          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
         
         </div>
  

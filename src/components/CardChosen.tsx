@@ -7,12 +7,11 @@ import "./cards.css";
 interface ICard{
     player?: IPlayer,
     buttonText: string,
-    dreamTeam: IPlayer[],
     handleClick?: (event: React.MouseEvent) => void,
 }
 
 
-export default function Cards(props:ICard) {
+export default function CardChosen(props:ICard) {
     
 
 
@@ -21,7 +20,7 @@ export default function Cards(props:ICard) {
      return (
         <div className="cards">
             
-                <Card className={!props.dreamTeam.includes(props.player) ? "card" : "card added"}>
+                <Card className="card">
                     
                     <Card.Img style={{ width: '15rem', height:"18rem"}} variant="top" 
                                 src="https://resources.premierleague.com/premierleague/photos/players/110x140/Photo-Missing.png" />
@@ -35,7 +34,7 @@ export default function Cards(props:ICard) {
                                 <li>Team: {props.player.team}</li>
                         
                         </Card.Text>
-                        {!props.dreamTeam.includes(props.player) && <Button onClick={props.handleClick} variant="primary">{props.buttonText}</Button>}
+                        <Button onClick={props.handleClick} variant="primary">{props.buttonText}</Button>
                     </Card.Body>
                 </Card>
                 

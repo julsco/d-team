@@ -5,7 +5,6 @@ import "./cards.css";
 
 interface ICardTeam{
     team: ITeam,
-    /* teamImg: string */
     handleAdd?: (event: React.MouseEvent) => void,
 }
 

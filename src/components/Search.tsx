@@ -5,7 +5,6 @@ import { FiSearch } from "react-icons/fi";
 
 interface ISearchType {
   handleQuery: (event: React.ChangeEvent<HTMLInputElement>) => void ,
-  handleClick: (event: React.MouseEvent) => void,
   query: string
 }
 
@@ -20,7 +19,7 @@ function Search(props:ISearchType) {
     <>
       <form style={formStyle}>
         <input onChange={props.handleQuery} value={props.query} type="text" placeholder="Search by player name" name="search"/>
-        <Button onClick={props.handleClick} className='search__btn' type="submit"><FiSearch /></Button>
+        
       </form>
      
     </>
