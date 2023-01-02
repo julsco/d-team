@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction, useContext } from 'react';
 import { IPlayer, ITeam } from "../helpers/interfaces";
 import { localGet, localSet } from '../helpers/localStorage';
 import '../index.css';
@@ -8,19 +8,21 @@ import Cards from './Cards';
 import CardTeam from './CardTeam';
 import CardChosen from './CardChosen';
 import Search from "./Search";
-import Spinner from "./Spinner";
+import { PlayersContext, TeamsContext, DreamTeamContext } from "./App";
+
+
 
 
 interface IBtn {
-  teams: ITeam[],
-  players: IPlayer[],
   goalKeeper?: boolean,
-  dreamTeam: IPlayer[],
-  setter: Dispatch<SetStateAction<IPlayer[]>>
 }
 
 
 export default function BtnAdd(props: IBtn) {
+
+    const premierePlayers: IPlayer[] = useContext(PlayersContext);
+    const premiereTeams: ITeam[] = useContext(TeamsContext);
+    const [teamDream, setTeamDream]: [IPlayer[], Dispatch<SetStateAction<IPlayer[]>>] = useContext(DreamTeamContext)
 
 
     //MODAL SETUP
@@ -53,10 +55,10 @@ export default function BtnAdd(props: IBtn) {
 
 
   useEffect(()=> {
-
-    const filteredPlayers = props.players.filter( (player:IPlayer) => !props.goalKeeper ? player.position !== "Goalkeeper" : player.position === "Goalkeeper")
     
-    setPlayersSearched(filteredPlayers.filter((player:IPlayer) => player.fullName.toLowerCase().includes(query)));
+    const filteredPlayers = premierePlayers.filter( (player:IPlayer) => !props.goalKeeper ? player.position !== "Goalkeeper" : player.position === "Goalkeeper")
+    
+     setPlayersSearched(filteredPlayers.filter((player:IPlayer) => player.fullName.toLowerCase().includes(query)));
     
   },[query])
 
@@ -66,13 +68,14 @@ export default function BtnAdd(props: IBtn) {
 
   const [showBackToTeamsBtn, setShowBackToTeamsBtn] = useState<boolean>(false)
   const [showButton, setShowButton] = useState<boolean>(true)
-  const [showPlayer, setShowPlayer] = useState<boolean>(false);
   const [showTeams, setShowTeams] = useState<boolean>(false);
   const [showTeamPlayers, setShowTeamPlayers] = useState<boolean>(false);
   const [myPlayers, setMyPlayers] = useState<IPlayer[]>([]);
   const [chosenPlayer, setChosenPlayer] = useState<IPlayer>();
+  const [showPlayer, setShowPlayer] = useState<boolean>(false);
  
  
+
   //Button add player
   const handleAdd = () => {
     setShowTeams(!showTeams)
@@ -99,7 +102,7 @@ export default function BtnAdd(props: IBtn) {
   const selectTeam = (team:string) => {
     setShowTeamPlayers(!showTeamPlayers)
     setShowTeams(!showTeams)
-    const filteredPlayers = props.players.filter( (player:IPlayer) => player.team === team)
+    const filteredPlayers = premierePlayers.filter( (player:IPlayer) => player.team === team)
     setMyPlayers(filteredPlayers.filter((player: IPlayer) => !props.goalKeeper ? player.position !== "Goalkeeper" : player.position === "Goalkeeper")) 
   }
 
@@ -121,7 +124,7 @@ export default function BtnAdd(props: IBtn) {
     setModal(!modal)
     setShowBackToTeamsBtn(false)
     setShowButton(false)
-    props.setter((curr: IPlayer[])=> [...curr, player])
+    setTeamDream((curr: IPlayer[])=> [...curr, player])
   }
 
 
@@ -135,27 +138,34 @@ export default function BtnAdd(props: IBtn) {
     setShowTeamPlayers(false)
     setQuery("")
     setShowBackToTeamsBtn(false)
-    props.setter((curr: IPlayer[])=> curr.filter((player:IPlayer) => player !== chosenPlayer))
+    setTeamDream((curr: IPlayer[])=> curr.filter((player:IPlayer) => player !== chosenPlayer))
   }
 
     // Local Storage
 
-    
+   /*    useEffect(()=> {
+        console.log(chosenPlayer)
+      },[chosenPlayer])
+ */
 
-      useEffect(()=> {
-        if (chosenPlayer) localGet("selected-player", () => setChosenPlayer)
-      },[])
-    
-      useEffect(()=> {
+      /* useEffect(()=> {
         if (chosenPlayer) localSet("selected-player", chosenPlayer)
       })
   
+      useEffect(()=> {
+          localGet("selected-player", () => setChosenPlayer)
+          if (chosenPlayer) setShowPlayer(true)
+        },[]) */
+    
     
 
   return (
   <>
     <div className='btnAdd__component'>
-      
+            
+            {/* {premierePlayers.map((player: IPlayer, i: number) => (<div key= {i}>{player.fullName}</div>))} */}
+                                   
+
             {/* Button to add player and lead to team interface */}
             {showButton && <Button onClick={handleAdd} className="btn btn-primary btn-lg sp">Add {props.goalKeeper ? "goalkeeper" : "player"}</Button>}
             {modal && 
@@ -171,14 +181,14 @@ export default function BtnAdd(props: IBtn) {
                               {/* Team interface */}
                               
                               <div className="btn__left inner__modal">
-                                {showBackToTeamsBtn /* && queryClick */ && <Button className="btn btn-primary btn-lg" onClick={backToMain}><TfiAngleLeft /></Button> }
+                                {showBackToTeamsBtn  && <Button className="btn btn-primary btn-lg" onClick={backToMain}><TfiAngleLeft /></Button> }
                               </div>
                               <div className="inner__modal">
                                 <Search handleQuery = {handleQuery} query={query} />
                               </div>
                             </div>}
                             <div className="inner__modal search">
-                              {showTeams && query.length == 0 && props.teams.map((team:ITeam, i:number)=>(
+                              {showTeams && query.trim().length ===0  && premiereTeams.map((team:ITeam, i:number)=>(
                                   <CardTeam  key={i} team={team} handleAdd={() => selectTeam(team.name)}/>
                                   ))}
                               
@@ -186,22 +196,22 @@ export default function BtnAdd(props: IBtn) {
 
                               {/* PLAYERS SEARCHED INTERFACE */}
                               
-                              {query.length > 0 && playersSearched.map((player: IPlayer, i: number) => (
-                                  <Cards key= {i} player={player} dreamTeam={props.dreamTeam} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
+                              {query.trim().length !==0 && playersSearched.map((player: IPlayer, i: number) => (
+                                  <Cards key= {i} player={player} dreamTeam={teamDream} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
                                    ))}
                               
-                              {query.length > 0 && playersSearched.length == 0 && <>{!props.goalKeeper ? "Player" : "Goalkeeper"} {query} not found</>}
+                              {query.trim().length !==0 && playersSearched.length == 0 && <>{!props.goalKeeper ? "Player" : "Goalkeeper"} {query} not found</>}
                               
                                   
 
                             </div>
                             {/* Players from team selected interface */}
                             <div className="btn__left inner__modal">
-                              {/* !showNotFound &&  */showTeamPlayers && !showTeams && <Button className="btn btn-primary btn-lg" onClick={backToTeams}><TfiAngleLeft /></Button>}
+                              {showTeamPlayers && !showTeams && <Button className="btn btn-primary btn-lg" onClick={backToTeams}><TfiAngleLeft /></Button>}
                             </div>
                             <div className="inner__modal">
-                              {/* !showNotFound &&  */showTeamPlayers && !showTeams && myPlayers.map((player: IPlayer, i:number)=>(
-                              <Cards key= {i} player={player} dreamTeam={props.dreamTeam} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
+                              {showTeamPlayers && !showTeams && myPlayers.map((player: IPlayer, i:number)=>(
+                              <Cards key= {i} player={player} dreamTeam={teamDream} buttonText={"Add me"} handleClick={() => selectPlayer(player)}/>
                               ))}
                             </div> 
                       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, Dispatch, SetStateAction,  } from 'react';
 import '../index.css';
 import { API } from '../helpers/API';
 import { IPlayer, ITeam } from '../helpers/interfaces';
@@ -6,6 +6,15 @@ import { getData } from '../helpers/apiCall';
 import { localGet, localSet } from '../helpers/localStorage';
 import PlayerColumn from './PlayerColumn';
 
+interface IDT {
+  dreamTeam: IPlayer[],
+  setter: Dispatch<SetStateAction<IPlayer[]>>
+}
+
+export const PlayersContext = createContext<IPlayer[]>([]);
+export const TeamsContext = createContext<ITeam[]>([]);
+export const DreamTeamContext = createContext<any>([]);
+ 
 
 export default function App() {
 
@@ -39,18 +48,22 @@ export default function App() {
 /*RENDER*/
 
   return (
-   
-        <div className='player__container'>
+    <PlayersContext.Provider value={allPlayers}>
+        <TeamsContext.Provider value={allTeams}>
+            <DreamTeamContext.Provider value={[dreamTeam, setDreamTeam]}>
+                 <div className='player__container'>
 
-          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} goalKeeper={true} />
-          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
-          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
-          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
-          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
-          <PlayerColumn dreamTeam= {dreamTeam} setter={setDreamTeam} teams= {allTeams} players={allPlayers} />
+                    <PlayerColumn goalKeeper={true} />
+                    <PlayerColumn />
+                    <PlayerColumn />
+                    <PlayerColumn />
+                    <PlayerColumn />
+                    <PlayerColumn />
         
-        </div>
- 
+                 </div>
+            </DreamTeamContext.Provider>
+        </TeamsContext.Provider>
+    </PlayersContext.Provider>
   );
 
   

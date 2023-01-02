@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './components/App';
+
 import Nav from './components/Nav';
 import reportWebVitals from './reportWebVitals';
 import Footer from './components/Footer';
